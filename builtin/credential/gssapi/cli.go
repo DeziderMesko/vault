@@ -6,7 +6,7 @@ import (
 	"net"
 	"strings"
 
-	"github.com/apcera/gssapi"
+	gssapi "github.com/apcera/gssapi"
 	"github.com/hashicorp/vault/api"
 	"github.com/mitchellh/mapstructure"
 )

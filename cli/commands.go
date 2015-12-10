@@ -12,9 +12,9 @@ import (
 	credAppId "github.com/hashicorp/vault/builtin/credential/app-id"
 	credCert "github.com/hashicorp/vault/builtin/credential/cert"
 	credGitHub "github.com/hashicorp/vault/builtin/credential/github"
+	credGssApi "github.com/hashicorp/vault/builtin/credential/gssapi"
 	credLdap "github.com/hashicorp/vault/builtin/credential/ldap"
 	credUserpass "github.com/hashicorp/vault/builtin/credential/userpass"
-	credGssApi "github.com/hashicorp/vault/builtin/credential/gssapi"
 
 	"github.com/hashicorp/vault/builtin/logical/aws"
 	"github.com/hashicorp/vault/builtin/logical/cassandra"
@@ -67,7 +67,7 @@ func Commands(metaPtr *command.Meta) map[string]cli.CommandFactory {
 					"github":   credGitHub.Factory,
 					"userpass": credUserpass.Factory,
 					"ldap":     credLdap.Factory,
-					"gssapi":     credGssApi.Factory,
+					"gssapi":   credGssApi.Factory,
 				},
 				LogicalBackends: map[string]logical.Factory{
 					"aws":        aws.Factory,
@@ -103,7 +103,7 @@ func Commands(metaPtr *command.Meta) map[string]cli.CommandFactory {
 					"userpass": &credUserpass.CLIHandler{},
 					"ldap":     &credLdap.CLIHandler{},
 					"cert":     &credCert.CLIHandler{},
-					"gssapi":     &credGssApi.CLIHandler{},
+					"gssapi":   &credGssApi.CLIHandler{},
 				},
 			}, nil
 		},
