@@ -1,10 +1,11 @@
 {
 	"ImportPath": "github.com/hashicorp/vault",
-	"GoVersion": "go1.5.1",
-	"Packages": [
-		"./..."
-	],
+	"GoVersion": "go1.5.2",
 	"Deps": [
+		{
+			"ImportPath": "github.com/apcera/gssapi",
+			"Rev": "862272bf257207005d025588a766c7b4ccb335ec"
+		},
 		{
 			"ImportPath": "github.com/armon/go-metrics",
 			"Rev": "6c5fa0d8f48f4661c9ba8709799c88d425ad20f0"
@@ -20,11 +21,6 @@
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/private/endpoints",
-			"Comment": "v0.10.4-18-gce51895",
-			"Rev": "ce51895e994693d65ab997ae48032bf13a9290b7"
-		},
-		{
-			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol/ec2query",
 			"Comment": "v0.10.4-18-gce51895",
 			"Rev": "ce51895e994693d65ab997ae48032bf13a9290b7"
 		},
@@ -55,11 +51,6 @@
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/private/waiter",
-			"Comment": "v0.10.4-18-gce51895",
-			"Rev": "ce51895e994693d65ab997ae48032bf13a9290b7"
-		},
-		{
-			"ImportPath": "github.com/aws/aws-sdk-go/service/ec2",
 			"Comment": "v0.10.4-18-gce51895",
 			"Rev": "ce51895e994693d65ab997ae48032bf13a9290b7"
 		},

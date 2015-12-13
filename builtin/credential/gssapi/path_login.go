@@ -1,7 +1,9 @@
 package userpass
 
 import (
+	"encoding/base64"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/vault/logical"
 	"github.com/hashicorp/vault/logical/framework"
@@ -30,20 +32,36 @@ func (b *backend) pathLogin(
 	req *logical.Request, d *framework.FieldData) (*logical.Response, error) {
 	gssAPIToken := d.Get("GssAPIToken").(string)
 
-	fmt.Println("Verifing token from client:", gssAPIToken)
+	fmt.Println("Verifing token from client:", gssAPIToken[:15])
+
+	username, err := getUsernameFromToken(gssAPIToken)
+	if err != nil {
+		return nil, err
+	}
 
 	return &logical.Response{
 		Auth: &logical.Auth{
-			Metadata: map[string]string{
-				"username": "someuser",
-			},
-			DisplayName: "someuser",
+			Policies:    []string{"root"},
+			DisplayName: username,
 			LeaseOptions: logical.LeaseOptions{
-				TTL:       b.System().DefaultLeaseTTL(),
-				Renewable: false,
+				TTL:         b.System().DefaultLeaseTTL(),
+				Renewable:   true,
+				GracePeriod: b.System().DefaultLeaseTTL() / 10,
 			},
 		},
 	}, nil
+}
+
+func getUsernameFromToken(token string) (string, error) {
+	byteToken, err := base64.StdEncoding.DecodeString(token)
+	if err != nil {
+		return "", err
+	}
+	_ = byteToken
+	// use accept security context to verify and extract username
+	username := "name.surname@domain"
+	return strings.Split(username, "@")[0], nil
+
 }
 
 func (b *backend) pathLoginRenew(
@@ -52,9 +70,9 @@ func (b *backend) pathLoginRenew(
 }
 
 const pathLoginSyn = `
-Log in with a username and password.
+Log in with a GSSAPI token
 `
 
 const pathLoginDesc = `
-This endpoint authenticates using a username and password.
+This endpoint authenticates using a GSSAPI backend
 `
